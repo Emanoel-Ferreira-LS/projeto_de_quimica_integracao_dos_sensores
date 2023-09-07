@@ -86,19 +86,17 @@ void loop(){
       Serial.println("Input invalido");
     }
   }  
-  readSensorRGB();
+ // readSensorRGB();
   //readSensorLDR();
-  readSensorTSL();
+  //readSensorTSL();
   //readSensorAPDS();
   delay(100); // Pequeno atraso entre leituras
 }
 
-int readSensorLDR(){
+void readSensorLDR(){
   ldr = analogRead(A0);
 
   Serial.println("LDR:"+ldr);
-
-  return ldr;
 }
 
 void readSensorRGB()
