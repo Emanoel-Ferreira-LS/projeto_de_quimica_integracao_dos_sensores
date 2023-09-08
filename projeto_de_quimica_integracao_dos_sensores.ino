@@ -37,7 +37,9 @@ Adafruit_TSL2561_Unified tsl = Adafruit_TSL2561_Unified(TSL2561_ADDR_FLOAT, 1234
 
 void setup(){
   Serial.begin(9600);
-
+  
+  Wire.begin();//inicializando  a comunicação I2C 
+  
   CS.begin();//inicializando sensor rgb tcs3200
 
   configureSensorTSL();//sensor TSL2561
@@ -45,11 +47,12 @@ void setup(){
   tsl.begin();//Inicialização sensor TSL25
 
   // Inicializa o APDS-9960 (configuração I2C e valores iniciais)
-  if ( apds.init() ) {
+  if ( apds.init()) {
     Serial.println(F("Inicialização do APDS-9960 completa"));
   } else {
     Serial.println(F("Algo deu errado durante a inicialização do APDS-9960!"));
   }
+  /* "F()" é uma macro que é usada para armazenar uma string na memória flash em vez de na memória RAM*/
 
   if ( apds.enableLightSensor(false) ) {
     Serial.println(F("O sensor de luz está funcionando agora"));
@@ -69,7 +72,7 @@ void loop(){
     espaco = dados.indexOf(' ');//quebrando a string até o espaço ' '
 
     value = dados.substring(0, espaco);//valor numerico da strind 
-    uni = dados.substring(espaco);//valor da unidade da string
+    uni = dados.substring(espaco+1);//valor da unidade da string(+1 carrega na variavel a parti do caractere " "(espaço)+1 da string, até o final
       
     Serial.print(uni + ":" + "\t" + value + "\t");
 
@@ -85,6 +88,7 @@ void loop(){
     }else{
       Serial.println("Input invalido");
     }
+    delay(1000);
   }  
  // readSensorRGB();
   //readSensorLDR();
